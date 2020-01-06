@@ -1,0 +1,62 @@
+{
+  "name": "uptimerobot-js",
+  "version": "1.0.0-alpha",
+  "description": "Unofficial node/browser javascript sdk for the https://uptimerobot.com api",
+  "main": "dist/uptimerobot.cjs.js",
+  "module": "dist/uptimerobot.esm.js",
+  "browser": "dist/uptimerobot.umd.js",
+  "types": "dist/types/uptimerobot.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jimleuk/uptimerobot-js#readme",
+  "author": "Jim Le <jim.le@height.io>",
+  "keywords": [
+    "uptimerobot",
+    "api",
+    "typescript",
+    "client"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimleuk/uptimerobot-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jimleuk/uptimerobot-js/issues"
+  },
+  "scripts": {
+    "test": "jest --watchAll",
+    "test:ci": "jest",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check",
+    "dist": "npm run test:ci && rm -rf dist/* && npm run compile && rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.0.1",
+    "@rollup/plugin-typescript": "^2.0.1",
+    "@types/jest": "^24.0.25",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^10.0.3",
+    "@types/qs": "^6.9.0",
+    "@types/uptimerobot": "git+https://github.com/jimleuk/uptimerobot-types.git",
+    "gts": "^1.1.2",
+    "jest": "^24.9.0",
+    "rollup": "^1.27.14",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "~3.7.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "lodash": "^4.17.15",
+    "qs": "^6.9.1"
+  }
+}
