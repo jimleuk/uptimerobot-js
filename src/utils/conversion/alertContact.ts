@@ -6,7 +6,7 @@ import {
   AlertContactState,
   AlertContactType,
   AlertContactListRequest,
-  AlertContactListResponse,
+  AlertContactListSuccessResponse,
   AlertContactCreateRequest,
   AlertContactCreateSuccessResponse,
   AlertContactDeleteRequest,
@@ -46,7 +46,7 @@ export const getAlertContactToApiAlertContact = (
  */
 export const getApiResponseToAlertContactListResponse = (
   response: Uptimerobot.AlertContactListSuccessResponse
-): AlertContactListResponse => ({
+): AlertContactListSuccessResponse => ({
   stat: response.stat as Stat,
   pagination: {
     limit: response.limit as Pagination['limit'],

@@ -11,7 +11,7 @@ export interface AlertContact
 
 // Responses ================================================================ //
 
-export interface AlertContactListResponse
+export interface AlertContactListSuccessResponse
   extends Omit<
     Uptimerobot.AlertContactListSuccessResponse,
     'stat' | 'limit' | 'offset' | 'total' | 'alert_contacts'
