@@ -14,7 +14,7 @@ describe('API errors', () => {
   };
 
   beforeAll(() => {
-    uptimerobot = new Api(apiKey);
+    uptimerobot = new Api(apiKey, { timeout: 3e3 });
   });
 
   it('errors should throw in a try/catch', async () => {
