@@ -8756,36 +8756,29 @@
     endianness: endianness,
   };
 
-  var hasFlag = (flag, argv = process.argv) => {
+  var hasFlag = (flag, argv) => {
+  	argv = argv || process.argv;
   	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
-  	const position = argv.indexOf(prefix + flag);
-  	const terminatorPosition = argv.indexOf('--');
-  	return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+  	const pos = argv.indexOf(prefix + flag);
+  	const terminatorPos = argv.indexOf('--');
+  	return pos !== -1 && (terminatorPos === -1 ? true : pos < terminatorPos);
   };
 
-  const {env} = process;
+  const env = process.env;
 
   let forceColor;
   if (hasFlag('no-color') ||
   	hasFlag('no-colors') ||
-  	hasFlag('color=false') ||
-  	hasFlag('color=never')) {
-  	forceColor = 0;
+  	hasFlag('color=false')) {
+  	forceColor = false;
   } else if (hasFlag('color') ||
   	hasFlag('colors') ||
   	hasFlag('color=true') ||
   	hasFlag('color=always')) {
-  	forceColor = 1;
+  	forceColor = true;
   }
-
   if ('FORCE_COLOR' in env) {
-  	if (env.FORCE_COLOR === 'true') {
-  		forceColor = 1;
-  	} else if (env.FORCE_COLOR === 'false') {
-  		forceColor = 0;
-  	} else {
-  		forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
-  	}
+  	forceColor = env.FORCE_COLOR.length === 0 || parseInt(env.FORCE_COLOR, 10) !== 0;
   }
 
   function translateLevel(level) {
@@ -8801,8 +8794,8 @@
   	};
   }
 
-  function supportsColor(haveStream, streamIsTTY) {
-  	if (forceColor === 0) {
+  function supportsColor(stream) {
+  	if (forceColor === false) {
   		return 0;
   	}
 
@@ -8816,21 +8809,22 @@
   		return 2;
   	}
 
-  	if (haveStream && !streamIsTTY && forceColor === undefined) {
+  	if (stream && !stream.isTTY && forceColor !== true) {
   		return 0;
   	}
 
-  	const min = forceColor || 0;
-
-  	if (env.TERM === 'dumb') {
-  		return min;
-  	}
+  	const min = forceColor ? 1 : 0;
 
   	if (process.platform === 'win32') {
-  		// Windows 10 build 10586 is the first Windows release that supports 256 colors.
-  		// Windows 10 build 14931 is the first release that supports 16m/TrueColor.
+  		// Node.js 7.5.0 is the first version of Node.js to include a patch to
+  		// libuv that enables 256 color output on Windows. Anything earlier and it
+  		// won't work. However, here we target Node.js 8 at minimum as it is an LTS
+  		// release, and Node.js 7 is not. Windows 10 build 10586 is the first Windows
+  		// release that supports 256 colors. Windows 10 build 14931 is the first release
+  		// that supports 16m/TrueColor.
   		const osRelease = os.release().split('.');
   		if (
+  			Number(process.versions.node.split('.')[0]) >= 8 &&
   			Number(osRelease[0]) >= 10 &&
   			Number(osRelease[2]) >= 10586
   		) {
@@ -8850,10 +8844,6 @@
 
   	if ('TEAMCITY_VERSION' in env) {
   		return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
-  	}
-
-  	if ('GITHUB_ACTIONS' in env) {
-  		return 1;
   	}
 
   	if (env.COLORTERM === 'truecolor') {
@@ -8884,18 +8874,22 @@
   		return 1;
   	}
 
+  	if (env.TERM === 'dumb') {
+  		return min;
+  	}
+
   	return min;
   }
 
   function getSupportLevel(stream) {
-  	const level = supportsColor(stream, stream && stream.isTTY);
+  	const level = supportsColor(stream);
   	return translateLevel(level);
   }
 
   var supportsColor_1 = {
   	supportsColor: getSupportLevel,
-  	stdout: translateLevel(supportsColor(true, tty.isatty(1))),
-  	stderr: translateLevel(supportsColor(true, tty.isatty(2)))
+  	stdout: getSupportLevel(process.stdout),
+  	stderr: getSupportLevel(process.stderr)
   };
 
   var node = createCommonjsModule(function (module, exports) {
@@ -15652,13 +15646,7 @@
     Zlib: Zlib$1
   };
 
-  var _args = [
-  	[
-  		"axios@0.19.0",
-  		"/Users/jimmyle/projects/uptimerobot/code/client"
-  	]
-  ];
-  var _from = "axios@0.19.0";
+  var _from = "axios@^0.19.0";
   var _id = "axios@0.19.0";
   var _inBundle = false;
   var _integrity = "sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==";
@@ -15666,21 +15654,22 @@
   var _phantomChildren = {
   };
   var _requested = {
-  	type: "version",
+  	type: "range",
   	registry: true,
-  	raw: "axios@0.19.0",
+  	raw: "axios@^0.19.0",
   	name: "axios",
   	escapedName: "axios",
-  	rawSpec: "0.19.0",
+  	rawSpec: "^0.19.0",
   	saveSpec: null,
-  	fetchSpec: "0.19.0"
+  	fetchSpec: "^0.19.0"
   };
   var _requiredBy = [
   	"/"
   ];
   var _resolved = "https://registry.npmjs.org/axios/-/axios-0.19.0.tgz";
-  var _spec = "0.19.0";
-  var _where = "/Users/jimmyle/projects/uptimerobot/code/client";
+  var _shasum = "8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8";
+  var _spec = "axios@^0.19.0";
+  var _where = "/Users/jimmyle/projects/uptimerobot/code/uptimerobot-js";
   var author = {
   	name: "Matt Zabriskie"
   };
@@ -15690,6 +15679,7 @@
   var bugs = {
   	url: "https://github.com/axios/axios/issues"
   };
+  var bundleDependencies = false;
   var bundlesize = [
   	{
   		path: "./dist/axios.min.js",
@@ -15700,6 +15690,7 @@
   	"follow-redirects": "1.5.10",
   	"is-buffer": "^2.0.2"
   };
+  var deprecated = false;
   var description = "Promise based HTTP client for the browser and node.js";
   var devDependencies = {
   	bundlesize: "^0.17.0",
@@ -15767,7 +15758,6 @@
   var typings = "./index.d.ts";
   var version = "0.19.0";
   var _package = {
-  	_args: _args,
   	_from: _from,
   	_id: _id,
   	_inBundle: _inBundle,
@@ -15777,13 +15767,16 @@
   	_requested: _requested,
   	_requiredBy: _requiredBy,
   	_resolved: _resolved,
+  	_shasum: _shasum,
   	_spec: _spec,
   	_where: _where,
   	author: author,
   	browser: browser$1,
   	bugs: bugs,
+  	bundleDependencies: bundleDependencies,
   	bundlesize: bundlesize,
   	dependencies: dependencies,
+  	deprecated: deprecated,
   	description: description,
   	devDependencies: devDependencies,
   	homepage: homepage,
@@ -15799,7 +15792,6 @@
 
   var _package$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    _args: _args,
     _from: _from,
     _id: _id,
     _inBundle: _inBundle,
@@ -15809,13 +15801,16 @@
     _requested: _requested,
     _requiredBy: _requiredBy,
     _resolved: _resolved,
+    _shasum: _shasum,
     _spec: _spec,
     _where: _where,
     author: author,
     browser: browser$1,
     bugs: bugs,
+    bundleDependencies: bundleDependencies,
     bundlesize: bundlesize,
     dependencies: dependencies,
+    deprecated: deprecated,
     description: description,
     devDependencies: devDependencies,
     homepage: homepage,
@@ -19716,6 +19711,39 @@
   var padStart_1 = padStart;
 
   /**
+   * Returns JSON string of an object
+   * @example
+   * getJSONToApiValue({ apple: 1 })
+   * > '{"apple":1}'
+   */
+  const getJSONToApiValue = (obj) => obj ? JSON.stringify(obj) : obj;
+  /**
+   * Returns a JSON object from a string
+   * @example
+   * getApiValueToJSON('{"apple":1}')
+   * > { apple: 1 }
+   */
+  const getApiValueToJSON = (value) => {
+      try {
+          return JSON.parse(value);
+      }
+      catch (e) {
+          return {};
+      }
+  };
+  /**
+   * Bi-directional conversion for api json values
+   * @example
+   * '{"apple":1}' -> { apple: 1 } -> '{"apple":1}'
+   */
+  const applyJSONConversion = (value) => {
+      if (typeof value === 'string')
+          return getApiValueToJSON(value);
+      if (typeof value === 'object')
+          return getJSONToApiValue(value);
+      return value;
+  };
+  /**
    * Returns a hyphen-delimited string of an array of number
    * @example
    * getArrayToApiValue([1,2,3])
@@ -19765,7 +19793,7 @@
    * 1 -> true or true -> 1
    */
   const applyBoolConversion = (value) => {
-      if (typeof value === 'string')
+      if (typeof value === 'string' || typeof value === 'number')
           return getApiValueToBool(value);
       if (typeof value === 'boolean')
           return getBoolToApiValue(value);
@@ -19809,7 +19837,7 @@
   const getTimeRangeToApiValue = (ranges) => {
       if (Array.isArray(ranges)) {
           return flatten_1([ranges])
-              .map(range => uniq_1(compact_1([range.start, range.end])).join('_'))
+              .map(range => { var _a; return uniq_1(compact_1([range.start.getTime(), (_a = range.end) === null || _a === void 0 ? void 0 : _a.getTime()])).join('_'); })
               .join('-');
       }
       return ranges;
@@ -19850,6 +19878,12 @@
   const getMonitorHttpCustomStatusesToApiValue = (customStatuses) => Array.isArray(customStatuses)
       ? customStatuses.map(custom => `${custom.code}:${custom.status}`).join('-')
       : customStatuses;
+  /** Returns a formatted string for MonitorAlertContactsNotification[] */
+  const getMonitorAlertContactsNotificationsToApiValue = (notifications) => Array.isArray(notifications)
+      ? notifications
+          .map(n => `${n.id}_${n.threshold || 0}_${n.recurrence || 0}`)
+          .join('-')
+      : notifications;
   /**
    * Returns api value for MWindowStartTime
    * @example
@@ -19894,7 +19928,6 @@
       };
   };
 
-  // Models =================================================================== //
   /**
    * Uptimerobot.Log -> Log
    */
@@ -19905,7 +19938,7 @@
    */
   const getApiMonitorToMonitor = (monitor) => {
       var _a;
-      return (Object.assign(Object.assign({}, monitor), { type: monitor.type, sub_type: monitor.sub_type, keyword_type: monitor.keyword_type, status: monitor.status, create_datetime: new Date(monitor.create_datetime), logs: (_a = monitor.logs) === null || _a === void 0 ? void 0 : _a.map(getApiLogToLog), is_group_main: applyBoolConversion(monitor.type) }));
+      return (Object.assign(Object.assign({}, monitor), { type: monitor.type, sub_type: monitor.sub_type, keyword_type: monitor.keyword_type, status: monitor.status, create_datetime: new Date(monitor.create_datetime), logs: (_a = monitor.logs) === null || _a === void 0 ? void 0 : _a.map(getApiLogToLog), is_group_main: applyBoolConversion(monitor.is_group_main) }));
   };
   // Responses ================================================================ //
   /**
@@ -19961,11 +19994,11 @@
   /**
    * MonitorCreateRequest -> Uptimerobot.MonitorCreateRequest
    */
-  const getMonitorCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: applyArrayConversion(request.alert_contacts), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
+  const getMonitorCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: getMonitorAlertContactsNotificationsToApiValue(request.alert_contacts), post_value: applyJSONConversion(request.post_value), custom_http_headers: applyJSONConversion(request.custom_http_headers), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
   /**
    * MonitorEditRequest -> Uptimerobot.MonitorEditRequest
    */
-  const getMonitorEditRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: applyArrayConversion(request.alert_contacts), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
+  const getMonitorEditRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: getMonitorAlertContactsNotificationsToApiValue(request.alert_contacts), post_value: applyJSONConversion(request.post_value), custom_http_headers: applyJSONConversion(request.custom_http_headers), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
   /**
    * MonitorDeleteRequest -> Uptimerobot.MonitorDeleteRequest
    */

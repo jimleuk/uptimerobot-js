@@ -2146,6 +2146,39 @@ function padStart(string, length, chars) {
 var padStart_1 = padStart;
 
 /**
+ * Returns JSON string of an object
+ * @example
+ * getJSONToApiValue({ apple: 1 })
+ * > '{"apple":1}'
+ */
+const getJSONToApiValue = (obj) => obj ? JSON.stringify(obj) : obj;
+/**
+ * Returns a JSON object from a string
+ * @example
+ * getApiValueToJSON('{"apple":1}')
+ * > { apple: 1 }
+ */
+const getApiValueToJSON = (value) => {
+    try {
+        return JSON.parse(value);
+    }
+    catch (e) {
+        return {};
+    }
+};
+/**
+ * Bi-directional conversion for api json values
+ * @example
+ * '{"apple":1}' -> { apple: 1 } -> '{"apple":1}'
+ */
+const applyJSONConversion = (value) => {
+    if (typeof value === 'string')
+        return getApiValueToJSON(value);
+    if (typeof value === 'object')
+        return getJSONToApiValue(value);
+    return value;
+};
+/**
  * Returns a hyphen-delimited string of an array of number
  * @example
  * getArrayToApiValue([1,2,3])
@@ -2195,7 +2228,7 @@ const getApiValueToBool = (value) => value === 1;
  * 1 -> true or true -> 1
  */
 const applyBoolConversion = (value) => {
-    if (typeof value === 'string')
+    if (typeof value === 'string' || typeof value === 'number')
         return getApiValueToBool(value);
     if (typeof value === 'boolean')
         return getBoolToApiValue(value);
@@ -2239,7 +2272,7 @@ const applyDateConversion = (value) => {
 const getTimeRangeToApiValue = (ranges) => {
     if (Array.isArray(ranges)) {
         return flatten_1([ranges])
-            .map(range => uniq_1(compact_1([range.start, range.end])).join('_'))
+            .map(range => { var _a; return uniq_1(compact_1([range.start.getTime(), (_a = range.end) === null || _a === void 0 ? void 0 : _a.getTime()])).join('_'); })
             .join('-');
     }
     return ranges;
@@ -2280,6 +2313,12 @@ const applyTimeRangeConversion = (value) => {
 const getMonitorHttpCustomStatusesToApiValue = (customStatuses) => Array.isArray(customStatuses)
     ? customStatuses.map(custom => `${custom.code}:${custom.status}`).join('-')
     : customStatuses;
+/** Returns a formatted string for MonitorAlertContactsNotification[] */
+const getMonitorAlertContactsNotificationsToApiValue = (notifications) => Array.isArray(notifications)
+    ? notifications
+        .map(n => `${n.id}_${n.threshold || 0}_${n.recurrence || 0}`)
+        .join('-')
+    : notifications;
 /**
  * Returns api value for MWindowStartTime
  * @example
@@ -2324,7 +2363,6 @@ const getApiValueForMWindowStartTime = (type, value) => {
     };
 };
 
-// Models =================================================================== //
 /**
  * Uptimerobot.Log -> Log
  */
@@ -2335,7 +2373,7 @@ const getApiLogToLog = (log) => (Object.assign(Object.assign({}, log), { datetim
  */
 const getApiMonitorToMonitor = (monitor) => {
     var _a;
-    return (Object.assign(Object.assign({}, monitor), { type: monitor.type, sub_type: monitor.sub_type, keyword_type: monitor.keyword_type, status: monitor.status, create_datetime: new Date(monitor.create_datetime), logs: (_a = monitor.logs) === null || _a === void 0 ? void 0 : _a.map(getApiLogToLog), is_group_main: applyBoolConversion(monitor.type) }));
+    return (Object.assign(Object.assign({}, monitor), { type: monitor.type, sub_type: monitor.sub_type, keyword_type: monitor.keyword_type, status: monitor.status, create_datetime: new Date(monitor.create_datetime), logs: (_a = monitor.logs) === null || _a === void 0 ? void 0 : _a.map(getApiLogToLog), is_group_main: applyBoolConversion(monitor.is_group_main) }));
 };
 // Responses ================================================================ //
 /**
@@ -2391,11 +2429,11 @@ const getMonitorListRequestToApiRequest = (request) => (Object.assign(Object.ass
 /**
  * MonitorCreateRequest -> Uptimerobot.MonitorCreateRequest
  */
-const getMonitorCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: applyArrayConversion(request.alert_contacts), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
+const getMonitorCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: getMonitorAlertContactsNotificationsToApiValue(request.alert_contacts), post_value: applyJSONConversion(request.post_value), custom_http_headers: applyJSONConversion(request.custom_http_headers), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
 /**
  * MonitorEditRequest -> Uptimerobot.MonitorEditRequest
  */
-const getMonitorEditRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: applyArrayConversion(request.alert_contacts), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
+const getMonitorEditRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { alert_contacts: getMonitorAlertContactsNotificationsToApiValue(request.alert_contacts), post_value: applyJSONConversion(request.post_value), custom_http_headers: applyJSONConversion(request.custom_http_headers), custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(request.custom_http_statuses), ignore_ssl_errors: applyBoolConversion(request.ignore_ssl_errors) }));
 /**
  * MonitorDeleteRequest -> Uptimerobot.MonitorDeleteRequest
  */
