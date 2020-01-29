@@ -1,5 +1,5 @@
 /// <reference types="uptimerobot" />
-import { AlertContact, AlertContactListRequest, AlertContactListResponse, AlertContactCreateRequest, AlertContactCreateSuccessResponse, AlertContactDeleteRequest, AlertContactDeleteSuccessResponse, AlertContactEditRequest, AlertContactEditSuccessResponse } from '../../types';
+import { AlertContact, AlertContactListRequest, AlertContactListSuccessResponse, AlertContactCreateRequest, AlertContactCreateSuccessResponse, AlertContactDeleteRequest, AlertContactDeleteSuccessResponse, AlertContactEditRequest, AlertContactEditSuccessResponse } from '../../types';
 /**
  * Uptimerobot.AlertContact -> AlertContact
  */
@@ -11,7 +11,7 @@ export declare const getAlertContactToApiAlertContact: (alertContact: AlertConta
 /**
  * Uptimerobot.AlertContactListSuccessResponse -> AlertContactListResponse
  */
-export declare const getApiResponseToAlertContactListResponse: (response: import("uptimerobot").AlertContactListSuccessResponse) => AlertContactListResponse;
+export declare const getApiResponseToAlertContactListResponse: (response: import("uptimerobot").AlertContactListSuccessResponse) => AlertContactListSuccessResponse;
 /**
  * Uptimerobot.AlertContactCreateSuccessResponse -> AlertContactCreateSuccessResponse
  */

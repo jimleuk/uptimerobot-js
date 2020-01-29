@@ -148,10 +148,6 @@ describe('conversion/alertContact', () => {
     const result = getAlertContactListRequestToApiRequest(listRequest)
     expect(result).toEqual(apiListRequest)
   })
-  test('getAlertContactListRequestToApiRequest', () => {
-    const result = getAlertContactListRequestToApiRequest(listRequest)
-    expect(result).toEqual(apiListRequest)
-  })
   test('getAlertContactCreateRequestToApiRequest', () => {
     const result = getAlertContactCreateRequestToApiRequest(createRequest)
     expect(result).toEqual(apiCreateRequest)

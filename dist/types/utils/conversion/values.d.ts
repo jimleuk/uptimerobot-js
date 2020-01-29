@@ -1,4 +1,24 @@
-import { TimeRange, MonitorHttpCustomStatus, MWindowType, MWindowStartTime, MWindowStartTimeRecurring } from '../../types';
+import { TimeRange, MonitorHttpCustomStatus, MonitorAlertContactsNotification, MWindowType, MWindowStartTime, MWindowStartTimeRecurring } from '../../types';
+/**
+ * Returns JSON string of an object
+ * @example
+ * getJSONToApiValue({ apple: 1 })
+ * > '{"apple":1}'
+ */
+export declare const getJSONToApiValue: (obj?: object | undefined) => string | undefined;
+/**
+ * Returns a JSON object from a string
+ * @example
+ * getApiValueToJSON('{"apple":1}')
+ * > { apple: 1 }
+ */
+export declare const getApiValueToJSON: (value: string) => object;
+/**
+ * Bi-directional conversion for api json values
+ * @example
+ * '{"apple":1}' -> { apple: 1 } -> '{"apple":1}'
+ */
+export declare const applyJSONConversion: (value?: string | object | undefined) => string | object | undefined;
 /**
  * Returns a hyphen-delimited string of an array of number
  * @example
@@ -99,6 +119,10 @@ export declare const getMonitorHttpCustomStatusesToApiValue: (customStatuses?: M
  * > [{ code: 400, status: 0 }, { code: 200, status: 1 }]
  */
 export declare const getApiValueToMonitorHttpCustomStatuses: (value: string) => MonitorHttpCustomStatus[];
+/** Returns a formatted string for MonitorAlertContactsNotification[] */
+export declare const getMonitorAlertContactsNotificationsToApiValue: (notifications?: MonitorAlertContactsNotification[] | undefined) => string | undefined;
+/** Returns a MonitorAlertContactsNotification[] for a formatted string */
+export declare const getApiValueForMonitorAlertContactsNotification: (notifications: string) => MonitorAlertContactsNotification[];
 /**
  * Returns api value for MWindowStartTime
  * @example

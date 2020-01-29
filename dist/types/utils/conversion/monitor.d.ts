@@ -1,9 +1,17 @@
 /// <reference types="uptimerobot" />
 import { Monitor, MonitorListRequest, MonitorListSuccessResponse, MonitorCreateRequest, MonitorCreateSuccessResponse, MonitorEditRequest, MonitorEditSuccessResponse, MonitorDeleteRequest, MonitorDeleteSuccessResponse, MonitorResetRequest, MonitorResetSuccessResponse, Log } from '../../types';
 /**
+ * Log -> Uptimerobot.Log
+ */
+export declare const getLogToApiLog: (log: Log) => import("uptimerobot").Log;
+/**
  * Uptimerobot.Log -> Log
  */
 export declare const getApiLogToLog: (log: import("uptimerobot").Log) => Log;
+/**
+ * Monitor -> Uptimerobot.Monitor
+ */
+export declare const getMonitorToApiMonitor: (monitor: Monitor) => import("uptimerobot").Monitor;
 /**
  * Uptimerobot.Monitor -> Monitor
  */

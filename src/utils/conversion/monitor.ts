@@ -1,9 +1,11 @@
 import {
+  applyJSONConversion,
   applyBoolConversion,
   applyArrayConversion,
   applyDateConversion,
   applyTimeRangeConversion,
   getMonitorHttpCustomStatusesToApiValue,
+  getMonitorAlertContactsNotificationsToApiValue,
 } from './values';
 import {
   Stat,
@@ -31,6 +33,21 @@ import {
 // Models =================================================================== //
 
 /**
+ * Log -> Uptimerobot.Log
+ */
+export const getLogToApiLog = (log: Log): Uptimerobot.Log => ({
+  ...log,
+  datetime: applyDateConversion(log.datetime) as number,
+  type: log.type as LogType,
+  reason: log.reason
+    ? {
+        ...log.reason,
+        code: log.reason.code as LogType,
+      }
+    : undefined,
+});
+
+/**
  * Uptimerobot.Log -> Log
  */
 export const getApiLogToLog = (log: Uptimerobot.Log): Log => ({
@@ -46,6 +63,20 @@ export const getApiLogToLog = (log: Uptimerobot.Log): Log => ({
 });
 
 /**
+ * Monitor -> Uptimerobot.Monitor
+ */
+export const getMonitorToApiMonitor = (
+  monitor: Monitor
+): Uptimerobot.Monitor => ({
+  ...monitor,
+  create_datetime: applyDateConversion(monitor.create_datetime) as number,
+  logs: monitor.logs?.map(getLogToApiLog),
+  is_group_main: applyBoolConversion(
+    monitor.is_group_main
+  ) as Uptimerobot.Monitor['is_group_main'],
+});
+
+/**
  * Uptimerobot.Monitor -> Monitor
  */
 export const getApiMonitorToMonitor = (
@@ -58,7 +89,7 @@ export const getApiMonitorToMonitor = (
   status: monitor.status as MonitorState,
   create_datetime: new Date(monitor.create_datetime),
   logs: monitor.logs?.map(getApiLogToLog),
-  is_group_main: applyBoolConversion(monitor.type) as boolean,
+  is_group_main: applyBoolConversion(monitor.is_group_main) as boolean,
 });
 
 // Responses ================================================================ //
@@ -199,8 +230,12 @@ export const getMonitorCreateRequestToApiRequest = (
   request: MonitorCreateRequest
 ): Uptimerobot.MonitorCreateRequest => ({
   ...request,
-  alert_contacts: applyArrayConversion(
-    request.alert_contacts as number[]
+  alert_contacts: getMonitorAlertContactsNotificationsToApiValue(
+    request.alert_contacts
+  ) as string,
+  post_value: applyJSONConversion(request.post_value) as string,
+  custom_http_headers: applyJSONConversion(
+    request.custom_http_headers
   ) as string,
   custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(
     request.custom_http_statuses as MonitorHttpCustomStatus[]
@@ -217,8 +252,12 @@ export const getMonitorEditRequestToApiRequest = (
   request: MonitorEditRequest
 ): Uptimerobot.MonitorEditRequest => ({
   ...request,
-  alert_contacts: applyArrayConversion(
-    request.alert_contacts as number[]
+  alert_contacts: getMonitorAlertContactsNotificationsToApiValue(
+    request.alert_contacts
+  ) as string,
+  post_value: applyJSONConversion(request.post_value) as string,
+  custom_http_headers: applyJSONConversion(
+    request.custom_http_headers
   ) as string,
   custom_http_statuses: getMonitorHttpCustomStatusesToApiValue(
     request.custom_http_statuses as MonitorHttpCustomStatus[]

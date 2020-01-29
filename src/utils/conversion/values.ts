@@ -6,10 +6,50 @@ import {
   TimeRange,
   MonitorState,
   MonitorHttpCustomStatus,
+  MonitorAlertContactsNotification,
   MWindowType,
   MWindowStartTime,
   MWindowStartTimeRecurring,
 } from '../../types';
+
+/**
+ * Returns JSON string of an object
+ * @example
+ * getJSONToApiValue({ apple: 1 })
+ * > '{"apple":1}'
+ */
+export const getJSONToApiValue = (obj?: object): string | undefined =>
+  obj ? JSON.stringify(obj) : obj;
+
+/**
+ * Returns a JSON object from a string
+ * @example
+ * getApiValueToJSON('{"apple":1}')
+ * > { apple: 1 }
+ */
+export const getApiValueToJSON = (value: string): object => {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return {};
+  }
+};
+
+/**
+ * Bi-directional conversion for api json values
+ * @example
+ * '{"apple":1}' -> { apple: 1 } -> '{"apple":1}'
+ */
+export const applyJSONConversion = (
+  value?: object | string
+):
+  | ReturnType<typeof getJSONToApiValue>
+  | ReturnType<typeof getApiValueToJSON>
+  | typeof value => {
+  if (typeof value === 'string') return getApiValueToJSON(value);
+  if (typeof value === 'object') return getJSONToApiValue(value);
+  return value;
+};
 
 /**
  * Returns a hyphen-delimited string of an array of number
@@ -75,7 +115,8 @@ export const applyBoolConversion = (
   | ReturnType<typeof getBoolToApiValue>
   | ReturnType<typeof getApiValueToBool>
   | typeof value => {
-  if (typeof value === 'string') return getApiValueToBool(value);
+  if (typeof value === 'string' || typeof value === 'number')
+    return getApiValueToBool(value);
   if (typeof value === 'boolean') return getBoolToApiValue(value);
   return value;
 };
@@ -127,7 +168,9 @@ export const getTimeRangeToApiValue = (
 ): string | undefined => {
   if (Array.isArray(ranges)) {
     return flatten([ranges])
-      .map(range => uniq(compact([range.start, range.end])).join('_'))
+      .map(range =>
+        uniq(compact([range.start.getTime(), range.end?.getTime()])).join('_')
+      )
       .join('-');
   }
   return ranges;
@@ -193,6 +236,29 @@ export const getApiValueToMonitorHttpCustomStatuses = (
     return {
       code: Number(code),
       status: Number(status) as MonitorState,
+    };
+  });
+
+/** Returns a formatted string for MonitorAlertContactsNotification[] */
+export const getMonitorAlertContactsNotificationsToApiValue = (
+  notifications?: MonitorAlertContactsNotification[]
+): string | undefined =>
+  Array.isArray(notifications)
+    ? notifications
+        .map(n => `${n.id}_${n.threshold || 0}_${n.recurrence || 0}`)
+        .join('-')
+    : notifications;
+
+/** Returns a MonitorAlertContactsNotification[] for a formatted string */
+export const getApiValueForMonitorAlertContactsNotification = (
+  notifications: string
+): MonitorAlertContactsNotification[] =>
+  notifications.split('-').map(n => {
+    const [id, threshold, recurrence] = n.split('-').map(Number);
+    return {
+      id,
+      threshold,
+      recurrence,
     };
   });
 

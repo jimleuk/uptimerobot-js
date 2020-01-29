@@ -5,7 +5,7 @@ export interface AlertContact extends Omit<Uptimerobot.AlertContact, 'type' | 's
     type: AlertContactType;
     status: AlertContactState;
 }
-export interface AlertContactListResponse extends Omit<Uptimerobot.AlertContactListSuccessResponse, 'stat' | 'limit' | 'offset' | 'total' | 'alert_contacts'> {
+export interface AlertContactListSuccessResponse extends Omit<Uptimerobot.AlertContactListSuccessResponse, 'stat' | 'limit' | 'offset' | 'total' | 'alert_contacts'> {
     stat: Stat;
     pagination: Pagination;
     alert_contacts: AlertContact[];

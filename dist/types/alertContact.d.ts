@@ -4,11 +4,11 @@ export declare class AlertContact extends Client {
     /**
      * Returns one or more specified AlertContacts.
      */
-    get: (alertContacts: number[] | undefined, params?: Pick<AlertContactListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").AlertContactListResponse>;
+    get: (alertContacts: number[] | undefined, params?: Pick<AlertContactListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").AlertContactListSuccessResponse>;
     /**
      * The list of alert contacts can be called with this method.
      */
-    list: (params?: Pick<AlertContactListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").AlertContactListResponse>;
+    list: (params?: Pick<AlertContactListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").AlertContactListSuccessResponse>;
     /**
      * New alert contacts of any type (mobile/SMS alert contacts are not supported
      * yet) can be created using this method.
