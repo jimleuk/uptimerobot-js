@@ -26,8 +26,8 @@
     "url": "https://github.com/jimleuk/uptimerobot-js/issues"
   },
   "scripts": {
-    "test": "jest --watchAll",
-    "test:ci": "jest",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
