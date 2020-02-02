@@ -4,11 +4,11 @@ export declare class MWindow extends Client {
     /**
      * Returns one or more specified maintenance windows.
      */
-    get: (mwindows: number[] | undefined, params?: Pick<MWindowListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").MWindowListResponse>;
+    get: (mwindows: number[] | undefined, params?: Pick<MWindowListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").MWindowListSuccessResponse>;
     /**
      * The list of maintenance windows can be called with this method.
      */
-    list: (params?: Pick<MWindowListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").MWindowListResponse>;
+    list: (params?: Pick<MWindowListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").MWindowListSuccessResponse>;
     /**
      * New maintenance windows can be created using this method.
      */

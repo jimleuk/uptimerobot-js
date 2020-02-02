@@ -115,8 +115,9 @@ export const applyBoolConversion = (
   | ReturnType<typeof getBoolToApiValue>
   | ReturnType<typeof getApiValueToBool>
   | typeof value => {
-  if (typeof value === 'string' || typeof value === 'number')
+  if (typeof value === 'string' || typeof value === 'number') {
     return getApiValueToBool(value);
+  }
   if (typeof value === 'boolean') return getBoolToApiValue(value);
   return value;
 };

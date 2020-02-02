@@ -10,7 +10,7 @@ import {
   MWindowState,
   MWindowType,
   MWindowListRequest,
-  MWindowListResponse,
+  MWindowListSuccessResponse,
   MWindowCreateRequest,
   MWindowCreateSuccessResponse,
   MWindowDeleteRequest,
@@ -31,6 +31,7 @@ export const getApiMWindowToMWindow = (
   status: mWindow.status as MWindowState,
   type: mWindow.type as MWindowType,
   start_time: getApiValueForMWindowStartTime(mWindow.type, mWindow.start_time),
+  value: applyArrayConversion(mWindow.value) as number[],
 });
 
 /**
@@ -40,17 +41,19 @@ export const getMWindowToApiMWindow = (
   mWindow: MWindow
 ): Uptimerobot.MWindow => ({
   ...mWindow,
+  user: mWindow.user || 0,
   start_time: getMWindowStartTimeToApiValue(mWindow.start_time) as string,
+  value: applyArrayConversion(mWindow.value) as string,
 });
 
 // Responses ================================================================ //
 
 /**
- * Uptimerobot.MWindowListSuccessResponse -> MWindowListResponse
+ * Uptimerobot.MWindowListSuccessResponse -> MWindowListSuccessResponse
  */
 export const getApiResponseToMWindowListResponse = (
   response: Uptimerobot.MWindowListSuccessResponse
-): MWindowListResponse => ({
+): MWindowListSuccessResponse => ({
   stat: response.stat as Stat,
   pagination: response.pagination as Pagination,
   mwindows: response.mwindows.map(getApiMWindowToMWindow),
@@ -109,6 +112,7 @@ export const getMWindowCreateRequestToApiRequest = (
 ): Uptimerobot.MWindowCreateRequest => ({
   ...request,
   start_time: getMWindowStartTimeToApiValue(request.start_time),
+  value: applyArrayConversion(request.value) as string,
 });
 
 /**

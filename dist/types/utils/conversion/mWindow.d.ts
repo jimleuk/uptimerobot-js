@@ -1,5 +1,5 @@
 /// <reference types="uptimerobot" />
-import { MWindow, MWindowListRequest, MWindowListResponse, MWindowCreateRequest, MWindowCreateSuccessResponse, MWindowDeleteRequest, MWindowDeleteSuccessResponse, MWindowEditRequest, MWindowEditSuccessResponse } from '../../types';
+import { MWindow, MWindowListRequest, MWindowListSuccessResponse, MWindowCreateRequest, MWindowCreateSuccessResponse, MWindowDeleteRequest, MWindowDeleteSuccessResponse, MWindowEditRequest, MWindowEditSuccessResponse } from '../../types';
 /**
  * Uptimerobot.MWindow -> MWindow
  */
@@ -9,9 +9,9 @@ export declare const getApiMWindowToMWindow: (mWindow: import("uptimerobot").MWi
  */
 export declare const getMWindowToApiMWindow: (mWindow: MWindow) => import("uptimerobot").MWindow;
 /**
- * Uptimerobot.MWindowListSuccessResponse -> MWindowListResponse
+ * Uptimerobot.MWindowListSuccessResponse -> MWindowListSuccessResponse
  */
-export declare const getApiResponseToMWindowListResponse: (response: import("uptimerobot").MWindowListSuccessResponse) => MWindowListResponse;
+export declare const getApiResponseToMWindowListResponse: (response: import("uptimerobot").MWindowListSuccessResponse) => MWindowListSuccessResponse;
 /**
  * Uptimerobot.MWindowCreateSuccessResponse -> MWindowCreateSuccessResponse
  */
