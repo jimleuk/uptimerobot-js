@@ -189,8 +189,8 @@ export const getTimeRangeToApiValue = (
 export const getApiValueToTimeRange = (value: string): TimeRange[] =>
   value.split('-').map(range => {
     const [rangeStart, rangeEnd] = range.split('_');
-    const start = new Date(rangeStart);
-    const end = rangeEnd ? new Date(rangeEnd) : start;
+    const start = new Date(+rangeStart);
+    const end = rangeEnd ? new Date(+rangeEnd) : start;
     return { start, end };
   });
 
@@ -255,7 +255,7 @@ export const getApiValueForMonitorAlertContactsNotification = (
   notifications: string
 ): MonitorAlertContactsNotification[] =>
   notifications.split('-').map(n => {
-    const [id, threshold, recurrence] = n.split('-').map(Number);
+    const [id, threshold, recurrence] = n.split('_').map(Number);
     return {
       id,
       threshold,
