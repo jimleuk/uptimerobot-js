@@ -38,7 +38,7 @@ export const getPSPToApiPSP = (psp: PSP): Uptimerobot.PSP => ({
 // Responses ================================================================ //
 
 /**
- * Uptimerobot.PSPListSuccessResponse -> Success
+ * Uptimerobot.PSPListSuccessResponse -> PSPListSuccessResponse
  */
 export const getApiResponseToPSPListResponse = (
   response: Uptimerobot.PSPListSuccessResponse

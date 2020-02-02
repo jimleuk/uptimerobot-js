@@ -89,10 +89,10 @@ MIT
 
 ## Todo
 **Publishing**
-- [ ] push to NPM as a public accessible module
+- [x] ~~push to NPM as a public accessible module~~
 
 **Tests**  
-- [ ] Unit tests for conversion helper functions
+- [x] ~~Unit tests for conversion helper functions~~
 - [ ] Integration tests with api
 
 **Documentation**
