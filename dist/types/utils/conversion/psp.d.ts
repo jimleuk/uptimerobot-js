@@ -1,5 +1,5 @@
 /// <reference types="uptimerobot" />
-import { PSP, PSPListRequest, PSPListResponse, PSPCreateRequest, PSPCreateSuccessResponse, PSPDeleteRequest, PSPDeleteSuccessResponse, PSPEditRequest, PSPEditSuccessResponse } from '../../types';
+import { PSP, PSPListRequest, PSPListSuccessResponse, PSPCreateRequest, PSPCreateSuccessResponse, PSPDeleteRequest, PSPDeleteSuccessResponse, PSPEditRequest, PSPEditSuccessResponse } from '../../types';
 /**
  * Uptimerobot.PSP -> PSP
  */
@@ -9,9 +9,9 @@ export declare const getApiPSPToPSP: (psp: import("uptimerobot").PSP) => PSP;
  */
 export declare const getPSPToApiPSP: (psp: PSP) => import("uptimerobot").PSP;
 /**
- * Uptimerobot.PSPListSuccessResponse -> PSPListResponse
+ * Uptimerobot.PSPListSuccessResponse -> Success
  */
-export declare const getApiResponseToPSPListResponse: (response: import("uptimerobot").PSPListSuccessResponse) => PSPListResponse;
+export declare const getApiResponseToPSPListResponse: (response: import("uptimerobot").PSPListSuccessResponse) => PSPListSuccessResponse;
 /**
  * Uptimerobot.PSPCreateSuccessResponse -> PSPCreateSuccessResponse
  */

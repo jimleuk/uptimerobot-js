@@ -5,11 +5,11 @@ export declare class PSP extends Client {
     /**
      * Returns one or more specified public status pages.
      */
-    get: (psps: number[] | undefined, params?: Pick<PSPListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").PSPListResponse>;
+    get: (psps: number[] | undefined, params?: Pick<PSPListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").PSPListSuccessResponse>;
     /**
      * The list of public status pages can be called with this method.
      */
-    list: (params?: Pick<import("uptimerobot").PSPListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").PSPListResponse>;
+    list: (params?: Pick<import("uptimerobot").PSPListRequest, "limit" | "offset"> | undefined) => Promise<import("./types").PSPListSuccessResponse>;
     /**
      * New public status pages can be created using this method.
      */

@@ -6,7 +6,7 @@ import {
   PSPState,
   PSPSort,
   PSPListRequest,
-  PSPListResponse,
+  PSPListSuccessResponse,
   PSPCreateRequest,
   PSPCreateSuccessResponse,
   PSPDeleteRequest,
@@ -38,11 +38,11 @@ export const getPSPToApiPSP = (psp: PSP): Uptimerobot.PSP => ({
 // Responses ================================================================ //
 
 /**
- * Uptimerobot.PSPListSuccessResponse -> PSPListResponse
+ * Uptimerobot.PSPListSuccessResponse -> Success
  */
 export const getApiResponseToPSPListResponse = (
   response: Uptimerobot.PSPListSuccessResponse
-): PSPListResponse => ({
+): PSPListSuccessResponse => ({
   stat: response.stat as Stat,
   pagination: {
     limit: response.limit as Pagination['limit'],
