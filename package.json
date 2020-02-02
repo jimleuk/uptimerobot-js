@@ -1,6 +1,6 @@
 {
   "name": "uptimerobot-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unofficial node/browser javascript sdk for the https://uptimerobot.com api",
   "main": "dist/uptimerobot.cjs.js",
   "module": "dist/uptimerobot.esm.js",
