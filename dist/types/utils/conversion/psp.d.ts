@@ -9,7 +9,7 @@ export declare const getApiPSPToPSP: (psp: import("uptimerobot").PSP) => PSP;
  */
 export declare const getPSPToApiPSP: (psp: PSP) => import("uptimerobot").PSP;
 /**
- * Uptimerobot.PSPListSuccessResponse -> Success
+ * Uptimerobot.PSPListSuccessResponse -> PSPListSuccessResponse
  */
 export declare const getApiResponseToPSPListResponse: (response: import("uptimerobot").PSPListSuccessResponse) => PSPListSuccessResponse;
 /**

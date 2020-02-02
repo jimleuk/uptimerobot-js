@@ -2325,8 +2325,8 @@ const getTimeRangeToApiValue = (ranges) => {
  */
 const getApiValueToTimeRange = (value) => value.split('-').map(range => {
     const [rangeStart, rangeEnd] = range.split('_');
-    const start = new Date(rangeStart);
-    const end = rangeEnd ? new Date(rangeEnd) : start;
+    const start = new Date(+rangeStart);
+    const end = rangeEnd ? new Date(+rangeEnd) : start;
     return { start, end };
 });
 /**
@@ -2733,7 +2733,7 @@ class MWindow extends Client {
 const getApiPSPToPSP = (psp) => (Object.assign(Object.assign({}, psp), { sort: psp.sort, status: psp.status, monitors: applyArrayConversion(psp.monitors) }));
 // Responses ================================================================ //
 /**
- * Uptimerobot.PSPListSuccessResponse -> PSPListResponse
+ * Uptimerobot.PSPListSuccessResponse -> PSPListSuccessResponse
  */
 const getApiResponseToPSPListResponse = (response) => ({
     stat: response.stat,
