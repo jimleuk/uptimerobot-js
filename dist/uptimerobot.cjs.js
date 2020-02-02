@@ -2228,8 +2228,9 @@ const getApiValueToBool = (value) => value === 1;
  * 1 -> true or true -> 1
  */
 const applyBoolConversion = (value) => {
-    if (typeof value === 'string' || typeof value === 'number')
+    if (typeof value === 'string' || typeof value === 'number') {
         return getApiValueToBool(value);
+    }
     if (typeof value === 'boolean')
         return getBoolToApiValue(value);
     return value;
@@ -2605,10 +2606,10 @@ class AlertContact extends Client {
 /**
  * Uptimerobot.MWindow -> MWindow
  */
-const getApiMWindowToMWindow = (mWindow) => (Object.assign(Object.assign({}, mWindow), { status: mWindow.status, type: mWindow.type, start_time: getApiValueForMWindowStartTime(mWindow.type, mWindow.start_time) }));
+const getApiMWindowToMWindow = (mWindow) => (Object.assign(Object.assign({}, mWindow), { status: mWindow.status, type: mWindow.type, start_time: getApiValueForMWindowStartTime(mWindow.type, mWindow.start_time), value: applyArrayConversion(mWindow.value) }));
 // Responses ================================================================ //
 /**
- * Uptimerobot.MWindowListSuccessResponse -> MWindowListResponse
+ * Uptimerobot.MWindowListSuccessResponse -> MWindowListSuccessResponse
  */
 const getApiResponseToMWindowListResponse = (response) => ({
     stat: response.stat,
@@ -2638,7 +2639,7 @@ const getMWindowListRequestToApiRequest = (request) => (Object.assign(Object.ass
 /**
  * MWindowCreateRequest -> Uptimerobot.MWindowCreateRequest
  */
-const getMWindowCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { start_time: getMWindowStartTimeToApiValue(request.start_time) }));
+const getMWindowCreateRequestToApiRequest = (request) => (Object.assign(Object.assign({}, request), { start_time: getMWindowStartTimeToApiValue(request.start_time), value: applyArrayConversion(request.value) }));
 /**
  * MWindowEditRequest -> Uptimerobot.MWindowEditRequest
  */
