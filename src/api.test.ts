@@ -7,6 +7,7 @@ describe('API errors', () => {
   const errorResponse = {
     stat: 'fail',
     error: {
+      message: 'api_key is invalid.',
       parameter_name: 'api_key',
       passed_value: apiKey,
       type: 'invalid_parameter',

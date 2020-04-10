@@ -35,7 +35,7 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run check",
-    "dist": "npm run test:ci && rm -rf dist/* && npm run compile && rollup -c"
+    "dist": "npm run test && rm -rf dist/* && npm run compile && rollup -c"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.1",
