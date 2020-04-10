@@ -15646,52 +15646,38 @@
     Zlib: Zlib$1
   };
 
-  var _from = "axios@^0.19.0";
-  var _id = "axios@0.19.0";
-  var _inBundle = false;
-  var _integrity = "sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==";
-  var _location = "/axios";
-  var _phantomChildren = {
+  var name = "axios";
+  var version = "0.19.0";
+  var description = "Promise based HTTP client for the browser and node.js";
+  var main = "index.js";
+  var scripts = {
+  	test: "grunt test && bundlesize",
+  	start: "node ./sandbox/server.js",
+  	build: "NODE_ENV=production grunt build",
+  	preversion: "npm test",
+  	version: "npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json",
+  	postversion: "git push && git push --tags",
+  	examples: "node ./examples/server.js",
+  	coveralls: "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+  	fix: "eslint --fix lib/**/*.js"
   };
-  var _requested = {
-  	type: "range",
-  	registry: true,
-  	raw: "axios@^0.19.0",
-  	name: "axios",
-  	escapedName: "axios",
-  	rawSpec: "^0.19.0",
-  	saveSpec: null,
-  	fetchSpec: "^0.19.0"
+  var repository = {
+  	type: "git",
+  	url: "https://github.com/axios/axios.git"
   };
-  var _requiredBy = [
-  	"/"
+  var keywords = [
+  	"xhr",
+  	"http",
+  	"ajax",
+  	"promise",
+  	"node"
   ];
-  var _resolved = "https://registry.npmjs.org/axios/-/axios-0.19.0.tgz";
-  var _shasum = "8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8";
-  var _spec = "axios@^0.19.0";
-  var _where = "/Users/jimmyle/projects/uptimerobot/code/uptimerobot-js";
-  var author = {
-  	name: "Matt Zabriskie"
-  };
-  var browser$1 = {
-  	"./lib/adapters/http.js": "./lib/adapters/xhr.js"
-  };
+  var author = "Matt Zabriskie";
+  var license = "MIT";
   var bugs = {
   	url: "https://github.com/axios/axios/issues"
   };
-  var bundleDependencies = false;
-  var bundlesize = [
-  	{
-  		path: "./dist/axios.min.js",
-  		threshold: "5kB"
-  	}
-  ];
-  var dependencies = {
-  	"follow-redirects": "1.5.10",
-  	"is-buffer": "^2.0.2"
-  };
-  var deprecated = false;
-  var description = "Promise based HTTP client for the browser and node.js";
+  var homepage = "https://github.com/axios/axios";
   var devDependencies = {
   	bundlesize: "^0.17.0",
   	coveralls: "^3.0.0",
@@ -15729,99 +15715,66 @@
   	webpack: "^1.13.1",
   	"webpack-dev-server": "^1.14.1"
   };
-  var homepage = "https://github.com/axios/axios";
-  var keywords = [
-  	"xhr",
-  	"http",
-  	"ajax",
-  	"promise",
-  	"node"
-  ];
-  var license = "MIT";
-  var main = "index.js";
-  var name = "axios";
-  var repository = {
-  	type: "git",
-  	url: "git+https://github.com/axios/axios.git"
-  };
-  var scripts = {
-  	build: "NODE_ENV=production grunt build",
-  	coveralls: "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-  	examples: "node ./examples/server.js",
-  	fix: "eslint --fix lib/**/*.js",
-  	postversion: "git push && git push --tags",
-  	preversion: "npm test",
-  	start: "node ./sandbox/server.js",
-  	test: "grunt test && bundlesize",
-  	version: "npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"
+  var browser$1 = {
+  	"./lib/adapters/http.js": "./lib/adapters/xhr.js"
   };
   var typings = "./index.d.ts";
-  var version = "0.19.0";
+  var dependencies = {
+  	"follow-redirects": "1.5.10",
+  	"is-buffer": "^2.0.2"
+  };
+  var bundlesize = [
+  	{
+  		path: "./dist/axios.min.js",
+  		threshold: "5kB"
+  	}
+  ];
+  var _resolved = "https://registry.npmjs.org/axios/-/axios-0.19.0.tgz";
+  var _integrity = "sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==";
+  var _from = "axios@0.19.0";
   var _package = {
-  	_from: _from,
-  	_id: _id,
-  	_inBundle: _inBundle,
-  	_integrity: _integrity,
-  	_location: _location,
-  	_phantomChildren: _phantomChildren,
-  	_requested: _requested,
-  	_requiredBy: _requiredBy,
-  	_resolved: _resolved,
-  	_shasum: _shasum,
-  	_spec: _spec,
-  	_where: _where,
-  	author: author,
-  	browser: browser$1,
-  	bugs: bugs,
-  	bundleDependencies: bundleDependencies,
-  	bundlesize: bundlesize,
-  	dependencies: dependencies,
-  	deprecated: deprecated,
-  	description: description,
-  	devDependencies: devDependencies,
-  	homepage: homepage,
-  	keywords: keywords,
-  	license: license,
-  	main: main,
   	name: name,
-  	repository: repository,
+  	version: version,
+  	description: description,
+  	main: main,
   	scripts: scripts,
+  	repository: repository,
+  	keywords: keywords,
+  	author: author,
+  	license: license,
+  	bugs: bugs,
+  	homepage: homepage,
+  	devDependencies: devDependencies,
+  	browser: browser$1,
   	typings: typings,
-  	version: version
+  	dependencies: dependencies,
+  	bundlesize: bundlesize,
+  	_resolved: _resolved,
+  	_integrity: _integrity,
+  	_from: _from
   };
 
   var _package$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    _from: _from,
-    _id: _id,
-    _inBundle: _inBundle,
-    _integrity: _integrity,
-    _location: _location,
-    _phantomChildren: _phantomChildren,
-    _requested: _requested,
-    _requiredBy: _requiredBy,
-    _resolved: _resolved,
-    _shasum: _shasum,
-    _spec: _spec,
-    _where: _where,
-    author: author,
-    browser: browser$1,
-    bugs: bugs,
-    bundleDependencies: bundleDependencies,
-    bundlesize: bundlesize,
-    dependencies: dependencies,
-    deprecated: deprecated,
-    description: description,
-    devDependencies: devDependencies,
-    homepage: homepage,
-    keywords: keywords,
-    license: license,
-    main: main,
     name: name,
-    repository: repository,
-    scripts: scripts,
-    typings: typings,
     version: version,
+    description: description,
+    main: main,
+    scripts: scripts,
+    repository: repository,
+    keywords: keywords,
+    author: author,
+    license: license,
+    bugs: bugs,
+    homepage: homepage,
+    devDependencies: devDependencies,
+    browser: browser$1,
+    typings: typings,
+    dependencies: dependencies,
+    bundlesize: bundlesize,
+    _resolved: _resolved,
+    _integrity: _integrity,
+    _from: _from,
     'default': _package
   });
 
