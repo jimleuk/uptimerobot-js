@@ -9,6 +9,10 @@ The **Uptimerobot-js** is an unofficial node/browser javascript sdk for the Upti
 ## Installation
 ```
 npm i uptimerobot-js --save
+
+// or
+
+yarn add uptimerobot-js
 ```
 ## Usage
 The library is written in Typescript but compiled to vanilla JS so can be used in non-typescript supported environments such as the browser.
@@ -31,6 +35,32 @@ const response = await uptimerobot.monitor.create({
 })
 ```
 
+## Why this library?
+
+The official Uptimerobot API is interesting to say the least. It prefers a custom delimited string convention over standard objects for requests.
+Take for example the following parameter for alert contacts when creating a new monitor.
+```
+alert_contacts: '457_0_0-373_5_0-8956_2_3'
+```
+
+> **From the official documentation**: ...where alert_contact>ids are seperated with - and threshold + recurrence are seperated with _. For ex: alert_contacts=457_5_0 refers to 457 being the alert_contact>id, 5 being the threshold and 0 being the recurrence...
+
+**Uptimerobot-js** has painstakingly changed all the occurences and handles the conversion between this delimited string format and a developer-friendly interface using objects. The development experience improves drastically because there is no longer the need to keep referring back to the official docs, writing your own utility functions and developers can fully take advantage of the typings.
+
+This is how the library handles the above:
+```
+alert_contacts: [
+  { id: 457, threshold: 0, recurrence: 0 },
+  { id: 373, threshold: 5, recurrence: 0 },
+  { id: 8956, threshold: 2, recurrence: 3 },
+]
+
+// when the requests goes to the server, we convert this to `457_0_0-373_5_0-8956_2_3`
+```
+
+This conversion is not exclusive for requests, it also happens with responses. When the api sends back delimited format strings, this library will handle the conversion automatically.
+
+
 ## Configuration
 The library is built on top of the [Axios](https://github.com/axios/axios) http library and exposes its complete config to be overwritten when the library is initialized.
 
@@ -45,6 +75,7 @@ const uptimerobot = new Uptimerobot('api_key...', {
 ```
 
 ## Documentation
+
 API documentation for this library is a TODO. Here is a high level view of the class object and available methods.
 ```
 Uptimerobot {
@@ -83,33 +114,16 @@ Uptimerobot {
 * [Unofficial Uptimerobot openAPI 3.0 documentation](https://github.com/jimleuk/uptimerobot-swagger)
 * [Unofficial Uptimerobot API typescript type defintions only](https://github.com/jimleuk/uptimerobot-types)
 
-## LICENCE
+## Licence
 
 MIT
 
-## Todo
-**Publishing**
-- [x] ~~push to NPM as a public accessible module~~
+## Donate
 
-**Tests**  
-- [x] ~~Unit tests for conversion helper functions~~
-- [ ] Integration tests with api
+A random charity appears!
 
-**Documentation**
-- [ ] **Write up documentation**
-  - [ ] Account
-  - [ ] AlertContact
-  - [ ] Monitor
-  - [ ] MWindow
-  - [ ] PSP
-- [ ] Api documentation site using a gatsbyJS/svelteJS site
-- [ ] Host documentation site on github pages.
+**[Stamma](https://stamma.org)**  
+The British Stammering Association, trading as Stamma is dedicated to creating a world where people who stammer are able to fulfil their potential and enjoy respect and consideration.
 
-**Development**
-- [x] **Conversion of API values**
-  - [x] ~~**Boolean values**~~  
-    ~~Api uses Integers "1" and "0" to set flags. Client should convert these to Boolean values and convert again to integers when outbound.~~
-  - [x] ~~**Dates**~~  
-    ~~Api returns dates as unix timestamps or "HH:mm". Client should convert these to javascript dates when appropriate and convert them back to string when outbound.~~
-  - [x] ~~**Lists of ids (arrays)**~~  
-    ~~Api uses hyphen-delimited strings for lists of ids. Client should accept an convert to array instead and convert again back to hyphen-delimited when outbound.~~
+**Org**: British Stammering Association trading as Stamma, reg. charity no. 1089967/SCO38866  
+**Donate**: https://stamma.org/join-us/donate-fundraise/donate
