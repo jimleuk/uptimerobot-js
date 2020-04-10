@@ -7,7 +7,7 @@
   "browser": "dist/uptimerobot.umd.js",
   "types": "dist/types/uptimerobot.d.ts",
   "files": [
-    "build"
+    "dist"
   ],
   "license": "MIT",
   "homepage": "https://github.com/jimleuk/uptimerobot-js#readme",
